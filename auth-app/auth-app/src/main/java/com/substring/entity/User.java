@@ -22,6 +22,7 @@ public class User {
     private UUID id;
     @Column(name = "user_email", unique = true, length = 300)
     private String email;
+    private String password;
     private String name;
     private String image;
     private Boolean enable=true;
