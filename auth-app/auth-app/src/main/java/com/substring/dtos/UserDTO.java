@@ -22,9 +22,14 @@ public class UserDTO {
     private String email;
     private String name;
     private String image;
+    private String password;
     private Boolean enable=true;
     private Instant createdAt=Instant.now();
     private Instant updatedAt=Instant.now();
-
+    private Provider provider;
     private Set<RoleDTO> roles = new HashSet<>();
+
+    public Boolean isEnable() {
+        return true;
+    }
 }
