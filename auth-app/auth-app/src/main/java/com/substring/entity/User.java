@@ -59,6 +59,8 @@ public class User implements UserDetails {
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName())).toList();
 
+
+
         return authorities;
     }
 
@@ -86,4 +88,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return this.enable;
     }
+
+
 }
