@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    @Transactional
     public UserDTO createUser(UserDTO userDTO) {
         if(userDTO.getEmail()==null || userDTO.getEmail().isBlank()){
             throw new IllegalArgumentException("Email is reqiured");
@@ -37,6 +39,8 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toEntity(userDTO);
 
         user.setProvider(userDTO.getProvider()!=null ? userDTO.getProvider() : Provider.LOCAL);
+        // role assign here to user ____ for authorization
+        // TODO:
         User savedUser = userRepository.save(user);
 //        return modelMapper.map(user, UserDTO.class);
         return userMapper.toDTO(user);
@@ -63,9 +67,10 @@ public class UserServiceImpl implements UserService {
         if(userDTO.getName()!=null) existingUser.setName(userDTO.getName());
         if(userDTO.getImage()!=null) existingUser.setImage(userDTO.getImage());
         if(userDTO.getProvider()!=null) existingUser.setProvider(userDTO.getProvider());
+        // TODO: change the password updation logic......
         if(userDTO.getPassword()!=null) existingUser.setPassword(userDTO.getPassword());
         existingUser.setEnable(userDTO.isEnable());
-
+        existingUser.setUpdatedAt(Instant.now());
         userRepository.save(existingUser);
 
 //        return modelMapper.map(existingUser,UserDTO.class);
@@ -89,6 +94,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Iterable<UserDTO> getAllUsers() {
 
         return userRepository
