@@ -9,6 +9,15 @@ spring:
     password: pass1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+#    hikari:
+#      pool-name: HikariCP
+#      maximum-pool: 5
+#      connection-timeout: 10000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      leak-defection-threshold: 0
+#      initialization-fail-timeout: -1
+
   jpa:
     hibernate:
       ddl-auto: update
