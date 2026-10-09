@@ -2,9 +2,9 @@ package com.substring.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
 import java.util.*;
@@ -15,8 +15,9 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 
-@Entity(name = "users")
-public class User implements UserDetails {
+@Entity
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     private Instant updatedAt=Instant.now();
 
     @Enumerated(EnumType.STRING)
-    private Provider provider;
+    private Provider provider = Provider.LOCAL;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -53,41 +54,41 @@ public class User implements UserDetails {
         updatedAt=Instant.now();
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = roles
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        List<SimpleGrantedAuthority> authorities = roles
+//                .stream()
+//                .map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+//
+//
+//
+//        return authorities;
+//    }
 
-
-
-        return authorities;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.enable;
-    }
+//    @Override
+//    public String getUsername() {
+//        return this.email;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return this.enable;
+//    }
 
 
 }
