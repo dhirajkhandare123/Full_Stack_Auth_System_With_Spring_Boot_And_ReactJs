@@ -1,5 +1,6 @@
 package com.substring.security;
 
+import com.substring.exception.ResourseNotFoundException;
 import com.substring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return userRepository.findByEmail(username).orElseThrow(()-> new ResourseNotFoundException("Invalid user or password"));
+
     }
 }
